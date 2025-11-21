@@ -1,88 +1,85 @@
-# Kean University 课程位置追踪器
+# Kean University 课程位置追踪应用
 
-这是一个用于自动抓取 Kean University 选课系统中课程剩余位置的移动应用程序，可以打包成 APK 文件在安卓手机上安装使用。
+本应用允许Kean University学生监控课程剩余位置，并打包为Android APK文件。
 
-## 功能特性
+## 功能
 
-- 登录 Kean University 选课系统
-- 自动抓取课程剩余位置信息
-- 可视化界面显示课程数据
-- 一键刷新获取最新数据
-- 适配移动设备界面
+- 用户登录界面（支持Kean University的Okta单点登录系统）
+- 课程数据自动抓取
+- 可视化显示课程名称和剩余位置
+- 刷新按钮获取最新数据
+- 错误处理和用户反馈
 
-## 技术架构
+## 技术栈
 
-- **前端界面**: Kivy (Python GUI 框架)
-- **网络请求**: requests 库
-- **HTML 解析**: BeautifulSoup4
-- **移动端打包**: Buildozer
-
-## 项目结构
-
-```
-/workspace/
-├── main.py              # 主应用文件
-├── course_scraper.py    # 课程数据抓取模块
-├── requirements.txt     # 项目依赖
-├── buildozer.spec       # Android 打包配置
-└── README.md            # 项目说明
-```
+- **前端**: Kivy (Python GUI框架)
+- **后端**: Python requests, BeautifulSoup4
+- **认证**: Okta SSO处理
+- **打包**: Buildozer (用于Android APK)
 
 ## 使用说明
 
-### 本地运行 (开发测试)
+### 本地运行
 
 1. 安装依赖：
-```bash
-pip install -r requirements.txt
-```
+   ```
+   pip install -r requirements.txt
+   ```
 
 2. 运行应用：
-```bash
-python main.py
+   ```
+   python main.py
+   ```
+
+### Android APK打包
+
+在Linux环境下执行以下命令：
+
+1. 安装Buildozer：
+   ```
+   pip install buildozer
+   ```
+
+2. 初始化Buildozer：
+   ```
+   buildozer init
+   ```
+
+3. 构建APK：
+   ```
+   buildozer android debug
+   ```
+
+生成的APK文件将位于 `bin/` 目录下。
+
+## Okta认证说明
+
+本应用已更新以支持Kean University的Okta单点登录系统。应用会：
+
+1. 访问课程规划页面，自动重定向到Okta登录
+2. 在Okta页面提交用户凭据
+3. 处理SAML认证流程
+4. 返回课程规划页面获取数据
+
+## 注意事项
+
+- 请确保遵守Kean University的使用条款
+- 应用使用网络请求抓取数据，请合理使用避免对服务器造成过大负载
+- 如遇到多因素认证(MFA)，可能需要手动处理
+
+## 文件结构
+
 ```
-
-### 打包成 APK (Android)
-
-1. 在 Linux 环境下安装 Buildozer：
-```bash
-pip install buildozer
+/workspace/
+├── main.py              # 主应用文件（包含UI和应用逻辑）
+├── course_scraper.py    # 课程数据抓取模块（支持Okta认证）
+├── requirements.txt     # 项目依赖
+├── buildozer.spec       # Android打包配置
+└── README.md            # 本说明文件
 ```
-
-2. 初始化 Buildozer：
-```bash
-buildozer init
-```
-
-3. 构建 APK：
-```bash
-buildozer android debug
-```
-
-生成的 APK 文件将在 `bin/` 目录中。
-
-## 重要提醒
-
-⚠️ **法律和道德注意事项**:
-- 使用此应用时请遵守 Kean University 的使用条款
-- 不要对选课系统造成过大负载，建议合理设置刷新频率
-- 仅用于个人学习和便利目的，不要用于恶意刷课等行为
-- 网站结构可能随时变化，需要相应更新解析代码
-
-## 代码说明
-
-`course_scraper.py` 文件中的解析逻辑需要根据实际的网页结构进行调整，因为不同学校和系统的页面结构可能不同。当前代码使用了通用的解析方法，但可能需要针对具体页面进行调整。
-
-## 自定义配置
-
-- 在 `buildozer.spec` 中可以修改应用名称、版本、权限等信息
-- 在 `course_scraper.py` 中可以调整登录和数据抓取逻辑
-- 在 `main.py` 中可以修改用户界面布局和交互方式
 
 ## 故障排除
 
-如果无法抓取数据，请检查：
-1. 网站登录流程是否发生变化
-2. 是否需要处理额外的验证机制（如验证码、双因素认证）
-3. 网络请求头是否需要更新
-4. 页面元素选择器是否需要调整
+- 如果登录失败，检查用户名和密码是否正确
+- 确保网络连接正常
+- 如果遇到MFA，当前版本可能无法自动处理，需要手动登录

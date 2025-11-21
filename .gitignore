@@ -1,18 +1,22 @@
 ```
-# Python
-__pycache__/
+# Build artifacts
 *.pyc
-*.pyo
-*.pyd
+__pycache__/
+*.o
+*.obj
+*.so
+*.dll
+*.exe
+*.out
 
 # Dependencies
 venv/
 .venv/
 .env
 .env.local
-*.env.*
+.env.*
 
-# Build artifacts
+# Build directories
 build/
 dist/
 *.egg-info/
@@ -20,14 +24,14 @@ dist/
 # Logs
 *.log
 
-# Editor/IDE
+# Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *.tmp
 
-# OS
+# System
 .DS_Store
 Thumbs.db
 
@@ -36,9 +40,13 @@ Thumbs.db
 coverage/
 htmlcov/
 
-# MyPy
-.mypy_cache/
-
-# Pytest
-.pytest_cache/
+# Python specific
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
 ```

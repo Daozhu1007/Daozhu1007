@@ -25,6 +25,7 @@ android.api = 30
 android.minapi = 21
 android.ndk = 23b
 android.sdk = 30
+android.add_compile_options = --target 21
 
 # 应用图标和启动画面
 # icon.filename = %(source.dir)s/icon.png
@@ -36,7 +37,3 @@ android.sdk = 30
 [buildozer]
 # 构建目录
 log_level = 2
-
-# 针对Android平台的配置
-[app] 
-android.add_compile_options = --target 21
